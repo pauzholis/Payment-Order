@@ -1,12 +1,7 @@
--- Создание базы данных платежных поручений
-CREATE DATABASE payment_order
-  -- Выбор кодировки
-  CHARACTER SET utf8;
 
-USE payment_order;
 
 -- Таблица банков
-CREATE TABLE banks (
+CREATE TABLE bank (
   id      INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
   COMMENT 'Идентификатор записи',
   name    VARCHAR(255) NOT NULL
@@ -21,7 +16,7 @@ CREATE TABLE banks (
 );
 
 -- Таблица клиентов (Плательщик/Получатель)
-CREATE TABLE clients (
+CREATE TABLE client (
 
   id      INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
   COMMENT 'Идентификатор записи',
@@ -33,83 +28,70 @@ CREATE TABLE clients (
   COMMENT 'Счет организации',
   inn     NUMERIC(10) UNSIGNED UNIQUE
   COMMENT 'ИНН организации',
-  kpp     INT UNSIGNED
+  kpp     NUMERIC(9) UNSIGNED
   COMMENT 'КПП организации',
   version INT      NOT NULL
   COMMENT 'Служебное поле Hibernate',
   bank_id INT UNSIGNED NOT NULL
   COMMENT 'Идентификатор банка',
-  FOREIGN KEY (bank_id) REFERENCES banks (id)
+  FOREIGN KEY (bank_id) REFERENCES bank (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 
 );
 
--- Таблица параметров платежных поручений
-CREATE TABLE orders (
-
-  id      INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
-  COMMENT 'Идентификатор записи',
-  number  NUMERIC(38) UNSIGNED NOT NULL UNIQUE
-  COMMENT 'Номер платежного поручения',
-  dates   DATE         NOT NULL
-  COMMENT 'Дата создания платежного поручения',
-  amount  NUMERIC(20) UNSIGNED NOT NULL
-  COMMENT 'Сумма платежа',
-  version INT     NOT NULL
-  COMMENT 'Служебное поле Hibernate'
-);
 
 -- Таблица платежных поручений
-CREATE TABLE payment_orders (
+CREATE TABLE payment_order (
 
   id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
   COMMENT 'Идентификатор записи',
+  number  NUMERIC(38) UNSIGNED NOT NULL UNIQUE
+  COMMENT 'Номер платежного поручения',
+  payment_order_date   DATE         NOT NULL
+  COMMENT 'Дата создания платежного поручения',
+  amount  NUMERIC(20) UNSIGNED NOT NULL
+  COMMENT 'Сумма платежа',
   id_payer     INT UNSIGNED NOT NULL
   COMMENT 'Идентификатор плательщика',
   id_recipient INT UNSIGNED NOT NULL
   COMMENT 'Идентификатор получателя',
   version      INT      NOT NULL
   COMMENT 'Служебное поле Hibernate',
-  FOREIGN KEY (id_payer) REFERENCES clients (id)
+  FOREIGN KEY (id_payer) REFERENCES client (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  FOREIGN KEY (id_recipient) REFERENCES clients (id)
+  FOREIGN KEY (id_recipient) REFERENCES client (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 
 );
 
 
-CREATE TABLE transaction_order (
-  id_orders         INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор платежных поручений',
-  id_payment_orders INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор параметров платежных поручений',
-  version      INT      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  FOREIGN KEY (id_orders) REFERENCES orders (id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  FOREIGN KEY (id_payment_orders) REFERENCES payment_orders (id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-);
+
 
 CREATE INDEX bank_bik
-  ON banks (bik);
+  ON bank (bik);
 
 CREATE INDEX bank_name
-  ON banks (name);
+  ON bank (name);
 
 CREATE INDEX client_account
-  ON clients (account);
+  ON client (account);
 
 CREATE INDEX client_inn
-  ON clients (inn);
+  ON client (inn);
 
 CREATE INDEX orders_number
-  ON orders (number);
+  ON payment_order (number);
+
+  CREATE INDEX bank_id
+  ON bank (id);
+
+  CREATE INDEX id_payer
+  ON client (id);
+
+
 
 
 
