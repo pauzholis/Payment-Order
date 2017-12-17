@@ -1,4 +1,4 @@
-package ru.penza.learnJava.practice.model;
+package ru.penza.learnjava.practice.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -6,22 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Mihail on 16.12.2017.
+ * Банки
  */
 @Entity
 @Table(name = "bank")
-
 public class Bank {
-
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
     /**
      * Наименование банка
      */
-
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
@@ -29,14 +26,12 @@ public class Bank {
     /**
      * БИК банка
      */
-
     @Column(name = "bik")
     private Integer bik;
 
     /**
      * Номер счета банка
      */
-
     @Basic(optional = false)
     @Column(name = "account")
     private BigInteger account;
@@ -44,24 +39,14 @@ public class Bank {
     /**
      * Служебное поле hibernate
      */
-
     @Version
     private Integer version;
 
     /**
      * Перечень клиентов банка
      */
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank")
-    private Set<Client>client = new HashSet<Client>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Set<Client> client = new HashSet<Client>();
 
     public String getName() {
         return name;
@@ -89,10 +74,6 @@ public class Bank {
 
     public Integer getVersion() {
         return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Set<Client> getClient() {
