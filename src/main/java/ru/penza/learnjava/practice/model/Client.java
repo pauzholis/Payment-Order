@@ -1,4 +1,4 @@
-package ru.penza.learnJava.practice.model;
+package ru.penza.learnjava.practice.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -6,22 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Mihail on 16.12.2017.
+ * Клиенты
  */
 @Entity
 @Table(name = "client")
-
 public class Client {
-
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column (name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     /**
      * Наименование организации
      */
-
     @Basic(optional = false)
     @Column
     private String name;
@@ -29,7 +26,6 @@ public class Client {
     /**
      * Счет организации
      */
-
     @Basic(optional = false)
     @Column(name = "account")
     private BigInteger account;
@@ -37,46 +33,39 @@ public class Client {
     /**
      * ИНН Организации
      */
-
     @Column(name = "inn")
     private Long inn;
 
     /**
      * КПП Организации
      */
-
     @Column(name = "kpp")
     private Integer kpp;
 
     /**
      * Служебное поле hibernate
      */
-
     @Version
     private Integer version;
 
     /**
      * Банк организации
      */
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
     /**
      * Перечень платежных поручений, где организация - плательщик
      */
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "payer")
     private Set<PaymentOrder> payerOrder = new HashSet<PaymentOrder>();
 
     /**
      * Перечень платежных поручений, где организация - получатель
      */
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient")
     private Set<PaymentOrder> recipientOrder = new HashSet<PaymentOrder>();
-
 
     public Client() {
     }
@@ -86,14 +75,6 @@ public class Client {
         this.account = account;
         this.inn = inn;
         this.kpp = kpp;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -130,10 +111,6 @@ public class Client {
 
     public Integer getVersion() {
         return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Bank getBank() {

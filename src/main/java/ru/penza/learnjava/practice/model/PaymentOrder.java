@@ -1,15 +1,14 @@
-package ru.penza.learnJava.practice.model;
+package ru.penza.learnjava.practice.model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Date;
 
 /**
- * Created by Mihail on 16.12.2017.
+ * Платежные поручения
  */
 @Entity
 @Table(name = "payment_order")
-
 public class PaymentOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +17,6 @@ public class PaymentOrder {
     /**
      * Идентификатор записи
      */
-
     @Basic(optional = false)
     @Column(name = "number")
     private BigInteger number;
@@ -26,7 +24,6 @@ public class PaymentOrder {
     /**
      * Номер платежного поручения
      */
-
     @Basic(optional = false)
     @Column(name = "payment_order_date")
     @Temporal(value = TemporalType.DATE)
@@ -35,35 +32,29 @@ public class PaymentOrder {
     /**
      * Дата создания платежного поручения
      */
-
     @Basic(optional = false)
     @Column(name = "amount")
     private BigInteger amount;
 
-
     /**
      * Служебное поле hibernate
      */
-
     @Version
     private Integer version;
 
     /**
      * Плательщик
      */
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_payer")
     private Client payer;
 
     /**
      * Получатель
      */
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_recipient")
     private Client recipient;
-
 
     public PaymentOrder() {
     }
@@ -75,14 +66,6 @@ public class PaymentOrder {
         this.amount = amount;
         this.payer = payer;
         this.recipient = recipient;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public BigInteger getNumber() {
@@ -111,10 +94,6 @@ public class PaymentOrder {
 
     public Integer getVersion() {
         return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Client getPayer() {
