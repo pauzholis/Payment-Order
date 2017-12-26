@@ -1,4 +1,4 @@
-package ru.penza.learnJava.practice.controller;
+package ru.penza.learnjava.practice.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

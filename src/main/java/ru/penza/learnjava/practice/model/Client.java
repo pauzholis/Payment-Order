@@ -1,5 +1,7 @@
 package ru.penza.learnjava.practice.model;
 
+import javax.persistence.Entity;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.HashSet;
