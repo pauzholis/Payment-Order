@@ -6,9 +6,11 @@ import java.math.BigInteger;
  * Created by Mihail on 26.12.2017.
  */
 public class ClientView {
-    public Long id;
+
 
     public String name;
+
+    public BigInteger account;
 
     public Long inn;
 
@@ -22,11 +24,12 @@ public class ClientView {
 
     }
 
-    public ClientView(Long id, String name, Integer bik, BigInteger account, Integer version) {
-        this.id = id;
+    public ClientView( String name,BigInteger account, Long inn, Integer kpp) {
+
         this.name = name;
+        this.account = account;
         this.inn = inn;
         this.kpp = kpp;
-        this.version = version;
+
     }
 }

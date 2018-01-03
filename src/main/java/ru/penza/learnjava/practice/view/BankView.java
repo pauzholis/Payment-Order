@@ -7,7 +7,7 @@ import java.math.BigInteger;
  */
 public class BankView {
 
-    public Long id;
+
 
     public String name;
 
@@ -23,12 +23,16 @@ public class BankView {
 
     }
 
-    public BankView(Long id, String name, Integer bik, BigInteger account, Integer version) {
-        this.id = id;
+    public BankView( String name, Integer bik, BigInteger account) {
+
         this.name = name;
         this.bik = bik;
         this.account = account;
-        this.version = version;
+
+    }
+
+    public String toString(){
+        return "{name:" + name + ";bik:" + bik + ";account" + account + "}";
     }
 
 

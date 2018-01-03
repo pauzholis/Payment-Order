@@ -3,6 +3,7 @@ package ru.penza.learnjava.practice.dao;
 import ru.penza.learnjava.practice.model.Bank;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface BankDao {
 
@@ -11,15 +12,11 @@ public interface BankDao {
      */
     public Bank getBankById(Long id);
 
-    /**
-     * Добавление банка
-     */
-    public void addBank(Bank bank);
 
     /**
-     * Удаление банка по идентификатору
+     * Удаление банка
      */
-    public void deleteBankById(Bank bank);
+    public void deleteBank(Bank bank);
 
     /**
      * Редактирование банка
@@ -29,5 +26,6 @@ public interface BankDao {
     /**
      * Получение списка всех банков
      */
-    public Collection<Bank> getAllBanks();
+
+    public List<Bank> getAllBanks();
 }

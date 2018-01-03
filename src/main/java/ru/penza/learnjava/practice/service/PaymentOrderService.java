@@ -7,7 +7,10 @@ import java.util.List;
 public interface PaymentOrderService {
 
 
-    public void getPaymentOrder(PaymentOrderView paymentOrderView);
+    PaymentOrderView getPaymentOrder(Long id);
+    List<PaymentOrderView> getAllOrders();
+    void delete (PaymentOrderView view);
+    void update (PaymentOrderView view);
+    void add(PaymentOrderView view);
 
-    public List<PaymentOrderView> getAllOrders();
 }

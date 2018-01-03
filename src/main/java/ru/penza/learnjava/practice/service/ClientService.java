@@ -6,8 +6,10 @@ import ru.penza.learnjava.practice.view.PaymentOrderView;
 import java.util.List;
 
 public interface ClientService {
-    void getClient(ClientView clientView);
+    ClientView getClient(Long id);
     List<ClientView> getAllClients();
+    void update(ClientView view);
+    void delete(ClientView view);
 }
 
 

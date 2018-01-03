@@ -1,12 +1,12 @@
 package ru.penza.learnjava.practice.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.penza.learnjava.practice.dao.BankDao;
 import ru.penza.learnjava.practice.model.Bank;
 import ru.penza.learnjava.practice.service.BankService;
 import ru.penza.learnjava.practice.view.BankView;
@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class BankServiceImpl implements BankService {
-    private final Logger log = LoggerFactory.getLogger(BankServiceImpl.class);
 
-    private final BankDAO dao;
+
+    private final BankDao dao;
 
     @Autowired
-    public BankServiceImpl(BankDAO dao) {
+    public BankServiceImpl(BankDao dao) {
         this.dao = dao;
     }
 
@@ -32,12 +32,44 @@ public class BankServiceImpl implements BankService {
     @Override
     @Transactional
     public BankView getBank(Long id) {
-return dao.getById(id);
+        Bank bank = dao.getBankById(id);
+        return new BankView(bank.getName(), bank.getBik(), bank.getAccount());
+
+
     }
 
     @Override
+    @Transactional
     public List<BankView> getAllBanks() {
-        return null;
+        List<Bank> banks = dao.getAllBanks();
+
+        Function<Bank, BankView> mapBank = b -> {
+            BankView bankView = new BankView();
+            bankView.name = b.getName();
+            bankView.bik = b.getBik();
+            bankView.account = b.getAccount();
+            return bankView;
+        };
+
+        return banks.stream().map(mapBank).collect(Collectors.toList());
+
+
+    }
+
+    @Override
+    @Transactional
+    public void update(BankView view) {
+        Bank bank = new Bank(view.name, view.bik, view.account);
+        dao.updateBank(bank);
+    }
+
+    @Override
+    @Transactional
+    public void delete(BankView view) {
+        Bank bank = new Bank(view.name, view.bik, view.account);
+        dao.deleteBank(bank);
+
+
     }
 }
-}
+

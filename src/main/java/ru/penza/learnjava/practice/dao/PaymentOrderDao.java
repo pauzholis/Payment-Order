@@ -6,6 +6,7 @@ import ru.penza.learnjava.practice.model.PaymentOrder;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Evgeniy on 17.12.2017.
@@ -40,15 +41,6 @@ public interface PaymentOrderDao {
     /**
      * Получение всех платежных поручений
      */
-    public Collection<PaymentOrder> getAllPaymentOrder();
 
-    /**
-     * Получение всех платежных поручений по плательщику
-     */
-    public Collection<PaymentOrder> getAllPaymentOrderByPayer(Client client);
+    public List<PaymentOrder> getAllPaymentOrder();
 
-    /**
-     * Получение всех платежных поручений по дате
-     */
-    public Collection<PaymentOrder> getAllPaymentOrderByDate(Date paymentOrderDate);
-}

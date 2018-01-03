@@ -52,6 +52,13 @@ public class Bank {
         return name;
     }
 
+    public Bank(String name, Integer bik, BigInteger account) {
+        this.name = name;
+        this.bik = bik;
+        this.account = account;
+
+    }
+
     public void setName(String name) {
         this.name = name;
     }

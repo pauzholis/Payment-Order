@@ -7,6 +7,7 @@ import ru.penza.learnjava.practice.model.PaymentOrder;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Evgeniy on 18.12.2017.
@@ -32,15 +33,5 @@ public class PaymentOrderDaoImpl implements PaymentOrderDao{
 
     }
 
-    public Collection<PaymentOrder> getAllPaymentOrder() {
-        return null;
-    }
 
-    public Collection<PaymentOrder> getAllPaymentOrderByPayer(Client client) {
-        return null;
-    }
-
-    public Collection<PaymentOrder> getAllPaymentOrderByDate(Date paymentOrderDate) {
-        return null;
-    }
 }

@@ -3,7 +3,7 @@ package ru.penza.learnjava.practice.dao.impl;
 import ru.penza.learnjava.practice.dao.BankDao;
 import ru.penza.learnjava.practice.model.Bank;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Evgeniy on 18.12.2017.
@@ -25,7 +25,8 @@ public class BankDaoImpl implements BankDao{
 
     }
 
-    public Collection<Bank> getAllBanks() {
+
+    public List<Bank> getAllBanks() {
         return null;
     }
 }
