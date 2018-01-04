@@ -65,9 +65,9 @@ public class BankServiceImpl implements BankService {
 
     @Override
     @Transactional
-    public void delete(BankView view) {
-        Bank bank = new Bank(view.name, view.bik, view.account);
-        dao.deleteBank(bank);
+    public void delete(Long id) {
+
+        dao.deleteBank(id);
 
 
     }

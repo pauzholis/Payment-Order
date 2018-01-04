@@ -1,37 +1,60 @@
 package ru.penza.learnjava.practice.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ru.penza.learnjava.practice.dao.PaymentOrderDao;
 import ru.penza.learnjava.practice.model.Client;
 import ru.penza.learnjava.practice.model.PaymentOrder;
-
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Evgeniy on 18.12.2017.
- */
-public class PaymentOrderDaoImpl implements PaymentOrderDao{
+@Repository
+public class PaymentOrderDaoImpl implements PaymentOrderDao {
+
+    private final EntityManager em;
+
+    @Autowired
+    public PaymentOrderDaoImpl(EntityManager em) {
+        this.em = em;
+    }
+
+    @Override
     public PaymentOrder getPaymentOrderById(Long id) {
-        return null;
+        return em.find(PaymentOrder.class, id);
     }
 
-    public PaymentOrder getPaymentOrderBynumber(BigInteger number) {
-        return null;
+    @Override
+    public PaymentOrder getPaymentOrderByNumber(BigInteger number) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<PaymentOrder> criteria = builder.createQuery(PaymentOrder.class);
+
+        Root<PaymentOrder> person = criteria.from(PaymentOrder.class);
+        criteria.where(builder.equal(person.get("number"), number));
+
+        TypedQuery<PaymentOrder> query = em.createQuery(criteria);
+        return query.getSingleResult();
     }
 
-    public void addPaymentOrder(PaymentOrder paymentOrder) {
+    @Override
+    public void deletePaymentOrderById(Long id) {
+        em.remove(em.find(PaymentOrder.class, id));
 
     }
 
-    public void deletePaymentOrderById(PaymentOrder paymentOrder) {
-
-    }
-
+    @Override
     public void updatePaymentOrder(PaymentOrder paymentOrder) {
+        em.persist(paymentOrder);
 
     }
 
-
+    @Override
+    public List<PaymentOrder> getAllPaymentOrder() {
+        TypedQuery<PaymentOrder> query = em.createQuery("SELECT p FROM payment_order p", PaymentOrder.class);
+        return query.getResultList();
+    }
 }

@@ -9,8 +9,8 @@ public interface PaymentOrderService {
 
     PaymentOrderView getPaymentOrder(Long id);
     List<PaymentOrderView> getAllOrders();
-    void delete (PaymentOrderView view);
+    void delete (Long id);
     void update (PaymentOrderView view);
-    void add(PaymentOrderView view);
+
 
 }

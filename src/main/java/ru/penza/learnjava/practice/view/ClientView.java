@@ -16,7 +16,7 @@ public class ClientView {
 
     public Integer kpp;
 
-    public Integer version;
+
 
 
     //для jackson

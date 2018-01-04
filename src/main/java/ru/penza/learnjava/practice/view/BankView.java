@@ -15,7 +15,7 @@ public class BankView {
 
     public BigInteger account;
 
-    public Integer version;
+
 
 
     //для jackson

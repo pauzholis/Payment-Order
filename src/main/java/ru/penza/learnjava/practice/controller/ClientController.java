@@ -5,12 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.penza.learnjava.practice.service.ClientService;
-import ru.penza.learnjava.practice.service.PaymentOrderService;
 import ru.penza.learnjava.practice.view.ClientView;
-import ru.penza.learnjava.practice.view.PaymentOrderView;
-
 import java.util.List;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -27,11 +23,24 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/client", method = {POST})
-    public void order(@RequestBody ClientView clientView) {
-        clientService.getClients(clientView);
+    public void order(@RequestBody Long id) {
+
+        clientService.getClient(id);
     }
 
     @RequestMapping(value = "/client", method = {GET})
-    public List<clientView> clients() {
+    public List<ClientView> clients() {
         return clientService.getAllClients();
     }
+    @RequestMapping(value = "/client", method = {POST})
+    public void update (ClientView clientView){
+        clientService.update(clientView);
+    }
+
+    @RequestMapping(value = "/client", method = {POST})
+    public void delete (Long id){
+        clientService.delete(id);
+    }
+
+
+}

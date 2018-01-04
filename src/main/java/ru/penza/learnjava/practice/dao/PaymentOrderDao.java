@@ -1,11 +1,8 @@
 package ru.penza.learnjava.practice.dao;
 
-import ru.penza.learnjava.practice.model.Client;
 import ru.penza.learnjava.practice.model.PaymentOrder;
 
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,17 +18,14 @@ public interface PaymentOrderDao {
     /**
      * Получение платежного поручения по номеру
      */
-    public PaymentOrder getPaymentOrderBynumber(BigInteger number);
-
-    /**
-     * Добавление платежного поручения
-     */
-    public void addPaymentOrder (PaymentOrder paymentOrder);
+    public PaymentOrder getPaymentOrderByNumber(BigInteger number);
 
     /**
      * Удаление платежного поручения по идентификатору
+     *
+     * @param id
      */
-    public void deletePaymentOrderById (PaymentOrder paymentOrder);
+    public void deletePaymentOrderById(Long id);
 
     /**
      * Редактирование платежного поручения
@@ -43,4 +37,5 @@ public interface PaymentOrderDao {
      */
 
     public List<PaymentOrder> getAllPaymentOrder();
+}
 

@@ -1,32 +1,49 @@
 package ru.penza.learnjava.practice.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ru.penza.learnjava.practice.dao.BankDao;
 import ru.penza.learnjava.practice.model.Bank;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
  * Created by Evgeniy on 18.12.2017.
  */
-public class BankDaoImpl implements BankDao{
+@Repository
+public class BankDaoImpl implements BankDao {
+    private final EntityManager em;
+
+    @Autowired
+    public BankDaoImpl(EntityManager em) {
+        this.em = em;
+    }
+
+    @Override
     public Bank getBankById(Long id) {
-        return null;
+
+        return em.find(Bank.class, id);
     }
 
-    public void addBank(Bank bank) {
+    @Override
+    public void deleteBank(Long id) {
 
+        em.remove(em.find(Bank.class, id));
     }
 
-    public void deleteBankById(Bank bank) {
-
+    @Override
+    public void updateBank(Bank bank)
+    {
+        em.persist(bank);
     }
 
-    public void updateBank(Bank bank) {
-
-    }
-
-
+    @Override
     public List<Bank> getAllBanks() {
-        return null;
+        TypedQuery<Bank> query = em.createQuery("SELECT b FROM bank b", Bank.class);
+        return query.getResultList();
+
+
     }
 }

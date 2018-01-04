@@ -25,13 +25,27 @@ public class PaymentOrderController {
     }
 
     @RequestMapping(value = "/order", method = {POST})
-    public void order(@RequestBody PaymentOrderView paymentOrderView) {
-        paymentOrderService.getPaymentOrder(paymentOrderView);
+    public void order(@RequestBody Long id) {
+        paymentOrderService.getPaymentOrder(id);
     }
 
     @RequestMapping(value = "/order", method = {GET})
     public List<PaymentOrderView> orders() {
+
         return paymentOrderService.getAllOrders();
     }
+
+    @RequestMapping(value = "/order", method = {POST})
+    public void update(PaymentOrderView paymentOrderView) {
+        paymentOrderService.update(paymentOrderView);
+    }
+
+    @RequestMapping(value = "/order", method = {POST})
+    public void delete(Long id) {
+        paymentOrderService.delete(id);
+    }
+
+
+
 
 }

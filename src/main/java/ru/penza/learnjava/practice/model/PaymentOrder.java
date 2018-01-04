@@ -60,12 +60,11 @@ public class PaymentOrder {
     }
 
     public PaymentOrder(BigInteger number, Date paymentOrderDate,
-                        BigInteger amount, Client payer, Client recipient) {
+                        BigInteger amount) {
         this.number = number;
         this.paymentOrderDate = paymentOrderDate;
         this.amount = amount;
-        this.payer = payer;
-        this.recipient = recipient;
+
     }
 
     public BigInteger getNumber() {

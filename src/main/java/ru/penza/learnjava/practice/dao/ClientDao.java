@@ -2,7 +2,6 @@ package ru.penza.learnjava.practice.dao;
 
 import ru.penza.learnjava.practice.model.Client;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,14 +15,10 @@ public interface ClientDao {
     public Client getClientById(Long id);
 
     /**
-     * Добавление клиента
-     */
-    public void addClient (Client client);
-
-    /**
      * Удаление клиента
+     * @param id
      */
-    public void deleteClient (Client client);
+    public void deleteClient (Long id);
 
     /**
      * Редактирование клиента

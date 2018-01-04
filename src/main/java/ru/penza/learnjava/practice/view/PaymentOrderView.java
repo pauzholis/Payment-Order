@@ -15,7 +15,7 @@ public class PaymentOrderView {
 
     public BigInteger amount;
 
-    public Integer version;
+
 
 
     //для jackson
@@ -31,4 +31,4 @@ public class PaymentOrderView {
     }
 }
 
-}
+

@@ -5,13 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.penza.learnjava.practice.dao.BankDao;
 import ru.penza.learnjava.practice.dao.ClientDao;
-import ru.penza.learnjava.practice.model.Bank;
 import ru.penza.learnjava.practice.model.Client;
-import ru.penza.learnjava.practice.service.BankService;
 import ru.penza.learnjava.practice.service.ClientService;
-import ru.penza.learnjava.practice.view.BankView;
 import ru.penza.learnjava.practice.view.ClientView;
 
 import java.util.List;
@@ -63,9 +59,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public void delete(ClientView view) {
-        Client client = new Client(view.name, view.account, view.inn, view.kpp);
-        dao.deleteClient(client);
+    public void delete(Long id) {
+
+        dao.deleteClient(id);
     }
 }
 

@@ -56,13 +56,19 @@ public class PaymentOrderServiceImpl implements PaymentOrderService{
 
     @Override
     @Transactional
-    public void delete(PaymentOrderView view) {
+    public void delete(Long id) {
+
+        dao.deletePaymentOrderById(id);
+
 
     }
 
     @Override
     @Transactional
     public void update(PaymentOrderView view) {
+        PaymentOrder paymentOrder = new PaymentOrder(view.number, view.paymentOrderDate,view.amount);
+        dao.updatePaymentOrder(paymentOrder);
 
     }
+
 }

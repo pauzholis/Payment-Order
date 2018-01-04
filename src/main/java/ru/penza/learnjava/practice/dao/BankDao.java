@@ -2,7 +2,6 @@ package ru.penza.learnjava.practice.dao;
 
 import ru.penza.learnjava.practice.model.Bank;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface BankDao {
@@ -15,8 +14,9 @@ public interface BankDao {
 
     /**
      * Удаление банка
+     * @param id
      */
-    public void deleteBank(Bank bank);
+    public void deleteBank(Long id);
 
     /**
      * Редактирование банка
