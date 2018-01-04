@@ -20,6 +20,7 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public Client getClientById(Long id) {
+
         return em.find(Client.class, id);
     }
 
@@ -35,7 +36,7 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public List<Client> getAllClient() {
-        TypedQuery<Client> query = em.createQuery("SELECT c FROM client c", Client.class);
+        TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c", Client.class);
         return query.getResultList();
     }
 }

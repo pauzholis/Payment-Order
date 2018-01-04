@@ -1,6 +1,7 @@
 package ru.penza.learnjava.practice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,25 +23,25 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @RequestMapping(value = "/client", method = {POST})
-    public void order(@RequestBody Long id) {
+    @RequestMapping(value = "/client/{id}")
+    public ClientView client(@PathVariable ("id")  Long id) {
 
-        clientService.getClient(id);
+        return clientService.getClient(id);
     }
 
-    @RequestMapping(value = "/client", method = {GET})
+    @RequestMapping(value = "/clients", method = {GET})
     public List<ClientView> clients() {
         return clientService.getAllClients();
     }
-    @RequestMapping(value = "/client", method = {POST})
-    public void update (ClientView clientView){
-        clientService.update(clientView);
-    }
-
-    @RequestMapping(value = "/client", method = {POST})
-    public void delete (Long id){
-        clientService.delete(id);
-    }
+//    @RequestMapping(value = "/client", method = {POST})
+//    public void update (ClientView clientView){
+//        clientService.update(clientView);
+//    }
+//
+//    @RequestMapping(value = "/client", method = {POST})
+//    public void delete (Long id){
+//        clientService.delete(id);
+//    }
 
 
 }

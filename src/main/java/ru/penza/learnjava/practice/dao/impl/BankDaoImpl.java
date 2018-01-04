@@ -41,7 +41,7 @@ public class BankDaoImpl implements BankDao {
 
     @Override
     public List<Bank> getAllBanks() {
-        TypedQuery<Bank> query = em.createQuery("SELECT b FROM bank b", Bank.class);
+        TypedQuery<Bank> query = em.createQuery("SELECT b FROM Bank b ", Bank.class);
         return query.getResultList();
 
 

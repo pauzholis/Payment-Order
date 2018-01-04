@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class PaymentOrderServiceImpl implements PaymentOrderService{
+
     private final PaymentOrderDao dao;
 
     @Autowired
@@ -41,7 +42,7 @@ public class PaymentOrderServiceImpl implements PaymentOrderService{
     @Override
     @Transactional
     public List<PaymentOrderView> getAllOrders() {
-        List<PaymentOrder> clients = dao.getAllPaymentOrder();
+        List<PaymentOrder> paymentOrder = dao.getAllPaymentOrder();
         Function<PaymentOrder, PaymentOrderView> mapPaymentOrder = p -> {
             PaymentOrderView paymentOrderView = new PaymentOrderView();
             paymentOrderView.number = p.getNumber();
@@ -50,7 +51,7 @@ public class PaymentOrderServiceImpl implements PaymentOrderService{
             return paymentOrderView;
         };
 
-        return clients.stream().map(mapPaymentOrder).collect(Collectors.toList());
+        return paymentOrder.stream().map(mapPaymentOrder).collect(Collectors.toList());
 
     }
 

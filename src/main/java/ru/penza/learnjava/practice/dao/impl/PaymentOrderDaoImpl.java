@@ -54,7 +54,7 @@ public class PaymentOrderDaoImpl implements PaymentOrderDao {
 
     @Override
     public List<PaymentOrder> getAllPaymentOrder() {
-        TypedQuery<PaymentOrder> query = em.createQuery("SELECT p FROM payment_order p", PaymentOrder.class);
+        TypedQuery<PaymentOrder> query = em.createQuery("SELECT p FROM PaymentOrder p", PaymentOrder.class);
         return query.getResultList();
     }
 }
