@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Payment Order</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Create a Payment Order:</h1>
+
+
+
+<form action="#" th:action="@{addOrder/submit}"
+      th:object="${paymentOrderView}" method="POST">
+    <div class="form-group">
+        <label>Number</label>
+        <input type="number" class="form-control" th:field="*{number}"/>
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        <input type="date" th:field="*{paymentOrderDate}"/>
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        <input type="number" th:field="*{amount}"/>
+    </div>
+
+    <div class="form-group">
+        <label>Payer</label>
+        <input type="number" th:field="*{payerId}"/>
+    </div>
+
+    <div class="form-group">
+        <label>Recipient</label>
+        <input type="number" th:field="*{recipientId}"/>
+    </div>
+
+    <button type="submit">Add</button>
+</form>
+</body>
+</html>

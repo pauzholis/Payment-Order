@@ -1,12 +1,9 @@
 package ru.penza.learnjava.practice.dao;
 
 import ru.penza.learnjava.practice.model.Client;
-
 import java.util.List;
 
-/**
- * Created by Evgeniy on 17.12.2017.
- */
+
 public interface ClientDao {
 
     /**

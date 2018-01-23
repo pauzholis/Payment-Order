@@ -1,21 +1,18 @@
 package ru.penza.learnjava.practice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import ru.penza.learnjava.practice.service.ClientService;
 import ru.penza.learnjava.practice.view.ClientView;
-import java.util.List;
+import java.math.BigInteger;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-@RestController
+
+@Controller
 @RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
 public class ClientController {
-
     private final ClientService clientService;
 
     @Autowired
@@ -23,25 +20,34 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @RequestMapping(value = "/client/{id}")
+    @RequestMapping(value = "client/{id}")
     public ClientView client(@PathVariable ("id")  Long id) {
-
         return clientService.getClient(id);
     }
 
-    @RequestMapping(value = "/clients", method = {GET})
-    public List<ClientView> clients() {
-        return clientService.getAllClients();
+    @RequestMapping("client")
+    public String getAllClients(Model model) {
+        model.addAttribute("clientView",clientService.getAllClients());
+        return "client";
     }
-//    @RequestMapping(value = "/client", method = {POST})
-//    public void update (ClientView clientView){
-//        clientService.update(clientView);
-//    }
-//
-//    @RequestMapping(value = "/client", method = {POST})
-//    public void delete (Long id){
-//        clientService.delete(id);
-//    }
-
-
+    @RequestMapping(value = { "client/addClient" })
+    public String showAddClientPage(Model model) {
+        model.addAttribute("clientView", new ClientView());
+        return "addClient";
+    }
+    @RequestMapping(value = "client/addClient/submit", method = RequestMethod.POST)
+    public String update (@ModelAttribute ClientView clientView ){
+        String name = clientView.getName();
+        BigInteger account = clientView.getAccount();
+        Long inn = clientView.getInn();
+        Integer kpp = clientView.getKpp();
+        ClientView newClient = new ClientView (name,account,inn,kpp);
+        clientService.update(newClient );
+        return "redirect:/client";
+    }
+    @RequestMapping(value = "client/delete/{id}")
+    public String delete (@PathVariable("id") Long id){
+        clientService.delete(id);
+        return "redirect:../";
+    }
 }

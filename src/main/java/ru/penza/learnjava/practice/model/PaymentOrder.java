@@ -56,15 +56,16 @@ public class PaymentOrder {
     @JoinColumn(name = "id_recipient")
     private Client recipient;
 
-    public PaymentOrder() {
-    }
+    public PaymentOrder() {}
 
-    public PaymentOrder(BigInteger number, Date paymentOrderDate,
-                        BigInteger amount) {
+    public PaymentOrder(BigInteger number, Date paymentOrderDate, BigInteger amount) {
         this.number = number;
         this.paymentOrderDate = paymentOrderDate;
         this.amount = amount;
+    }
 
+    public Long getId() {
+        return id;
     }
 
     public BigInteger getNumber() {

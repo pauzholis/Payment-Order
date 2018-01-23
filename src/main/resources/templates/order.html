@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+    <title>Payment Order List</title>
+</head>
+<body>
+<h1>Payment Order List</h1>
+<div>
+    <table border="1">
+        <tr>
+            <th>Number</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Payer</th>
+            <th>Recipient</th>
+        </tr>
+        <tr th:each ="paymentOrderView : ${paymentOrderView}">
+            <td th:utext="${paymentOrderView.number}">...</td>
+            <td th:utext="${paymentOrderView.paymentOrderDate}">...</td>
+            <td th:utext="${paymentOrderView.amount}">...</td>
+            <td th:utext="${paymentOrderView.payer.name}">...</td>
+            <td th:utext="${paymentOrderView.recipient.name}">...</td>
+            <td>
+                <form th:action="@{order/delete/{id}(id=${paymentOrderView.id})}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<h2>Add Bank</h2>
+<form action="order/addOrder">
+    <button type="submit">Add Payment Order</button>
+</form>
+</body>
+</html>

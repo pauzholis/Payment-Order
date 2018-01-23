@@ -1,11 +1,14 @@
 package ru.penza.learnjava.practice.model;
 
-import javax.persistence.Entity;
 
+
+import javax.persistence.Entity;
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+
 
 /**
  * Клиенты
@@ -60,17 +63,16 @@ public class Client {
     /**
      * Перечень платежных поручений, где организация - плательщик
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "payer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "payer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PaymentOrder> payerOrder = new HashSet<PaymentOrder>();
 
     /**
      * Перечень платежных поручений, где организация - получатель
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PaymentOrder> recipientOrder = new HashSet<PaymentOrder>();
 
-    public Client() {
-    }
+    public Client() {}
 
     public Client(String name, BigInteger account, Long inn, Integer kpp) {
         this.name = name;
@@ -78,6 +80,8 @@ public class Client {
         this.inn = inn;
         this.kpp = kpp;
     }
+
+    public Long getId() {return id;}
 
     public String getName() {
         return name;

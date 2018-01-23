@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+    <title>Bank List</title>
+</head>
+<body>
+<h1>Banks List</h1>
+<div>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Bik</th>
+            <th>Account</th>
+        </tr>
+        <tr th:each ="bankView : ${bankView}">
+            <td th:utext="${bankView.name}">...</td>
+            <td th:utext="${bankView.bik}">...</td>
+            <td th:utext="${bankView.account}">...</td>
+            <td>
+                <form th:action="@{bank/delete/{id}(id=${bankView.id})}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<h2>Add Bank</h2>
+<form action="bank/addBank">
+    <button type="submit">Add Bank</button>
+</form>
+</body>
+</html>

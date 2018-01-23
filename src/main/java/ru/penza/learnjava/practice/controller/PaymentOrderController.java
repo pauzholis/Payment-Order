@@ -1,52 +1,62 @@
 package ru.penza.learnjava.practice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import ru.penza.learnjava.practice.service.ClientService;
 import ru.penza.learnjava.practice.service.PaymentOrderService;
+import ru.penza.learnjava.practice.view.ClientView;
 import ru.penza.learnjava.practice.view.PaymentOrderView;
-
-import java.util.List;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import java.math.BigInteger;
+import java.util.Date;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-@RestController
-@RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
+@Controller
+@RequestMapping(value = "/")
 public class PaymentOrderController {
-
     private final PaymentOrderService paymentOrderService;
+    private final ClientService clientService;
 
     @Autowired
-    public PaymentOrderController(PaymentOrderService paymentOrderService) {
+    public PaymentOrderController(PaymentOrderService paymentOrderService, ClientService clientService) {
         this.paymentOrderService = paymentOrderService;
+        this.clientService = clientService;
     }
 
-    @RequestMapping(value = "/order/{id}")
+    @RequestMapping(value = "order/{id}")
     public PaymentOrderView order(@PathVariable("id") Long id) {
        return  paymentOrderService.getPaymentOrder(id);
     }
 
-    @RequestMapping(value = "/orders", method = {GET})
-    public List<PaymentOrderView> orders() {
-
-        return paymentOrderService.getAllOrders();
+    @RequestMapping(value = "order")
+    public String orders(Model model) {
+        model.addAttribute("paymentOrderView",paymentOrderService.getAllOrders());
+        return "order";
     }
 
-//    @RequestMapping(value = "/order", method = {POST})
-//    public void update(PaymentOrderView paymentOrderView) {
-//        paymentOrderService.update(paymentOrderView);
-//    }
-//
-//    @RequestMapping(value = "/order", method = {POST})
-//    public void delete(Long id) {
-//        paymentOrderService.delete(id);
-//    }
+    @RequestMapping(value = "order/addOrder")
+    public String addPaymentOrder(Model model) {
+      model.addAttribute("paymentOrderView", new PaymentOrderView());
+        return "addOrder";
+    }
+
+    @RequestMapping(value = "order/addOrder/submit", method = POST)
+    public String submitChange(@ModelAttribute PaymentOrderView paymentOrderView){
+        BigInteger number = paymentOrderView.number;
+        Date paymentOrderDate = paymentOrderView.paymentOrderDate;
+        BigInteger amount = paymentOrderView.amount;
+        ClientView payer = clientService.getClient(paymentOrderView.payerId);
+        ClientView recipient = clientService.getClient(paymentOrderView.recipientId);
+        PaymentOrderView newPaymentOrder = new PaymentOrderView(number,paymentOrderDate,amount,payer,recipient);
+        paymentOrderService.update(newPaymentOrder);
+        return "redirect:/order";
+    }
 
 
-
-
+    @RequestMapping(value = "/orders/delete/{id}")
+    public String delete (@PathVariable("id") Long id){
+        paymentOrderService.delete(id);
+        return "redirect:../";
+    }
 }

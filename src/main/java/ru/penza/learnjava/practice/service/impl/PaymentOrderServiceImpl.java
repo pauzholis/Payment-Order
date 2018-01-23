@@ -8,20 +8,16 @@ import ru.penza.learnjava.practice.dao.PaymentOrderDao;
 import ru.penza.learnjava.practice.model.PaymentOrder;
 import ru.penza.learnjava.practice.service.PaymentOrderService;
 import java.util.function.Function;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.penza.learnjava.practice.view.ClientView;
 import ru.penza.learnjava.practice.view.PaymentOrderView;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Evgeniy on 04.01.2018.
- */
+
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class PaymentOrderServiceImpl implements PaymentOrderService{
-
     private final PaymentOrderDao dao;
 
     @Autowired
@@ -33,10 +29,13 @@ public class PaymentOrderServiceImpl implements PaymentOrderService{
     @Transactional
     public PaymentOrderView getPaymentOrder(Long id) {
         PaymentOrder paymentOrder = dao.getPaymentOrderById(id);
+        ClientView payer = new ClientView(paymentOrder.getPayer().getName(),paymentOrder.getPayer().getAccount(),
+                paymentOrder.getPayer().getInn(), paymentOrder.getPayer().getKpp());
+        ClientView recipient = new ClientView(paymentOrder.getRecipient().getName(),
+                paymentOrder.getRecipient().getAccount(),paymentOrder.getRecipient().getInn(),
+                paymentOrder.getRecipient().getKpp());
         return new PaymentOrderView(paymentOrder.getNumber(),
-                paymentOrder.getPaymentOrderDate(), paymentOrder.getAmount());
-
-
+                paymentOrder.getPaymentOrderDate(), paymentOrder.getAmount(), payer,recipient);
     }
 
     @Override
@@ -45,23 +44,23 @@ public class PaymentOrderServiceImpl implements PaymentOrderService{
         List<PaymentOrder> paymentOrder = dao.getAllPaymentOrder();
         Function<PaymentOrder, PaymentOrderView> mapPaymentOrder = p -> {
             PaymentOrderView paymentOrderView = new PaymentOrderView();
+            paymentOrderView.id = p.getId();
             paymentOrderView.number = p.getNumber();
             paymentOrderView.paymentOrderDate = p.getPaymentOrderDate();
             paymentOrderView.amount = p.getAmount();
+            paymentOrderView.payer = new ClientView(p.getPayer().getName(),p.getPayer().getAccount(),
+                    p.getPayer().getInn(), p.getPayer().getKpp());
+            paymentOrderView.recipient =new ClientView(p.getPayer().getName(),p.getPayer().getAccount(),
+                    p.getPayer().getInn(), p.getPayer().getKpp());
             return paymentOrderView;
         };
-
         return paymentOrder.stream().map(mapPaymentOrder).collect(Collectors.toList());
-
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-
         dao.deletePaymentOrderById(id);
-
-
     }
 
     @Override
@@ -69,7 +68,6 @@ public class PaymentOrderServiceImpl implements PaymentOrderService{
     public void update(PaymentOrderView view) {
         PaymentOrder paymentOrder = new PaymentOrder(view.number, view.paymentOrderDate,view.amount);
         dao.updatePaymentOrder(paymentOrder);
-
     }
 
 }

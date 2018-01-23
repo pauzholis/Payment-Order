@@ -3,7 +3,6 @@ package ru.penza.learnjava.practice.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.penza.learnjava.practice.dao.PaymentOrderDao;
-import ru.penza.learnjava.practice.model.Client;
 import ru.penza.learnjava.practice.model.PaymentOrder;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Repository
 public class PaymentOrderDaoImpl implements PaymentOrderDao {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PaymentOrderDaoImpl.class);
     private final EntityManager em;
 
     @Autowired
@@ -42,14 +41,14 @@ public class PaymentOrderDaoImpl implements PaymentOrderDao {
 
     @Override
     public void deletePaymentOrderById(Long id) {
-        em.remove(em.find(PaymentOrder.class, id));
-
+        PaymentOrder paymentOrder = em.find(PaymentOrder.class, id);
+        if (paymentOrder != null)
+        em.remove(paymentOrder);
     }
 
     @Override
     public void updatePaymentOrder(PaymentOrder paymentOrder) {
         em.persist(paymentOrder);
-
     }
 
     @Override

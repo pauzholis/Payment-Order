@@ -1,9 +1,14 @@
 package ru.penza.learnjava.practice.model;
 
+
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+
 
 /**
  * Банки
@@ -45,21 +50,23 @@ public class Bank {
     /**
      * Перечень клиентов банка
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Client> client = new HashSet<Client>();
 
     public String getName() {
         return name;
     }
 
-    public Bank() {
-    }
+    public Bank() {}
 
     public Bank(String name, Integer bik, BigInteger account) {
         this.name = name;
         this.bik = bik;
         this.account = account;
+    }
 
+    public Long getId() {
+        return id;
     }
 
     public void setName(String name) {

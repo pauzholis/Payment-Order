@@ -14,13 +14,11 @@ public class ClientDaoImpl implements ClientDao {
 
     @Autowired
     public ClientDaoImpl(EntityManager em) {
-
         this.em = em;
     }
 
     @Override
     public Client getClientById(Long id) {
-
         return em.find(Client.class, id);
     }
 

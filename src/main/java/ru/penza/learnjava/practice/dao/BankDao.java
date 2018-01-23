@@ -1,7 +1,6 @@
 package ru.penza.learnjava.practice.dao;
 
 import ru.penza.learnjava.practice.model.Bank;
-
 import java.util.List;
 
 public interface BankDao {
